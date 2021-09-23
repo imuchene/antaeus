@@ -10,6 +10,7 @@ package io.pleo.antaeus.core.external
 
 import io.pleo.antaeus.models.Invoice
 import io.pleo.antaeus.core.services.CustomerService
+import io.pleo.antaeus.core.services.InvoiceService
 
 interface PaymentProvider {
     /*
@@ -25,11 +26,19 @@ interface PaymentProvider {
           `NetworkException`: when a network error happens.
      */
 
-    val customerService: CustomerService;
+    val customerService: CustomerService
+    val invoiceService: InvoiceService
+
     fun charge(invoice: Invoice): Boolean {
-      // Check if the customer exists
+      
+      // Validate the customer by checking if he/she exists
       customerService.fetch(invoice.customerId)
-      return true;
+
+      // Check if the invoice is pending, else throw an already paid exception
+      invoiceService.isInvoicePending(invoice.id)
+
+
+      return true
     }
 
     

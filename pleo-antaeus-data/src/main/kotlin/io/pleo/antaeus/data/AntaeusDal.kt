@@ -17,6 +17,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.andWhere
 
 class AntaeusDal(private val db: Database) {
     fun fetchInvoice(id: Int): Invoice? {
@@ -36,6 +37,17 @@ class AntaeusDal(private val db: Database) {
                 .selectAll()
                 .map { it.toInvoice() }
         }
+    }
+
+
+    fun isInvoicePending(id: Int): Invoice? {
+        return transaction(db) { 
+            InvoiceTable
+            .select {InvoiceTable.id.eq(id) }
+            .andWhere {InvoiceTable.status.eq(InvoiceStatus.PENDING.toString()) }
+            .firstOrNull()
+            ?.toInvoice()
+         }
     }
 
     fun createInvoice(amount: Money, customer: Customer, status: InvoiceStatus = InvoiceStatus.PENDING): Invoice? {
