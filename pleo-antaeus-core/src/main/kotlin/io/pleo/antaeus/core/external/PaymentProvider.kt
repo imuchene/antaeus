@@ -9,6 +9,7 @@
 package io.pleo.antaeus.core.external
 
 import io.pleo.antaeus.models.Invoice
+import io.pleo.antaeus.core.services.CustomerService
 
 interface PaymentProvider {
     /*
@@ -24,5 +25,12 @@ interface PaymentProvider {
           `NetworkException`: when a network error happens.
      */
 
-    fun charge(invoice: Invoice): Boolean
+    val customerService: CustomerService;
+    fun charge(invoice: Invoice): Boolean {
+      // Check if the customer exists
+      customerService.fetch(invoice.customerId)
+      return true;
+    }
+
+    
 }
