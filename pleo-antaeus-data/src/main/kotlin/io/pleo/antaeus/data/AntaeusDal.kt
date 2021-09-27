@@ -14,13 +14,8 @@ import io.pleo.antaeus.models.ChargeDetails
 import io.pleo.antaeus.models.CustomerAccount
 import io.pleo.antaeus.models.InvoiceStatus
 import io.pleo.antaeus.models.Money
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.update
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.joda.time.DateTime
 
@@ -99,7 +94,8 @@ class AntaeusDal(private val db: Database) {
         return fetchCustomer(id)
     }
 
-    fun saveChargeDetails(invoice: Invoice): InsertStatement<Number>? {
+    fun saveChargeDetails(invoice: Invoice): String? {
+        val insertId: String;
         val id = transaction(db) {
             ChargeDetailsTable.insert {
                 it[this.invoiceId] = invoice.id
@@ -108,7 +104,10 @@ class AntaeusDal(private val db: Database) {
                 it[this.updatedAt] = DateTime.now()
             }
         }
-        return id
+
+
+        insertId = id.toString()
+        return insertId
     }
 
     fun fetchCustomerAccount(id: Int): CustomerAccount? {
@@ -125,7 +124,7 @@ class AntaeusDal(private val db: Database) {
             CustomerAccountTable.update({CustomerAccountTable.customerId.eq(customerAccount.customerId)}) 
             { 
                 it[this.customerId] =  customerAccount.customerId
-                it[this.customerBalance] =  customerAccount.customerBalance.toBigDecimal()
+                it[this.customerBalance] =  customerAccount.customerBalance!!.toBigDecimal()
                 it[this.createdAt] =  customerAccount.createdAt
                 it[this.updatedAt] =  customerAccount.updatedAt
             }
