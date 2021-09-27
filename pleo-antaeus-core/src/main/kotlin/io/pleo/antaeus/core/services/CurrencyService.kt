@@ -1,6 +1,7 @@
 package io.pleo.antaeus.core.services
 import io.pleo.antaeus.models.Invoice
 import io.pleo.antaeus.data.AntaeusDal
+import io.pleo.antaeus.core.exceptions.CurrencyMismatchException
 
 
 
@@ -11,7 +12,7 @@ class CurrencyService(private val dal: AntaeusDal) {
             return true
         }
         else {
-            return false
+            throw CurrencyMismatchException(invoice.id, invoice.customerId)
         }
 
     }

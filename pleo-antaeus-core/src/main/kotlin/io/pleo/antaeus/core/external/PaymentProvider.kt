@@ -56,11 +56,7 @@ interface PaymentProvider {
       }
 
       // Validate the currency the invoice is in
-      val currency = currencyService.validateCurrency(invoice)
-
-      if(!currency){
-        return false
-      }
+      currencyService.validateCurrency(invoice)
 
       // Save charge details
       val chargeDetails = chargeDetailsService.saveChargeDetails(invoice)
