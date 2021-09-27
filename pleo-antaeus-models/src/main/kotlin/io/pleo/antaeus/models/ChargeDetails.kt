@@ -1,9 +1,9 @@
 package io.pleo.antaeus.models
-import java.time.LocalDateTime
+import org.joda.time.DateTime
 
 data class ChargeDetails (
   val invoiceId: Int,
   val paymentMethod: String,
-  val createdAt: LocalDateTime,
-  val updatedAt: LocalDateTime
+  val createdAt: DateTime,
+  val updatedAt: DateTime
 )

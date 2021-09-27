@@ -18,7 +18,6 @@ class InvoiceService(private val dal: AntaeusDal) {
         return dal.fetchInvoice(id) ?: throw InvoiceNotFoundException(id)
     }
 
-    fun isInvoicePending(id: Int): Invoice {
-        return dal.isInvoicePending(id) ?: throw InvoiceAlreadyPaidException();
+    fun isInvoicePending(id: Int): Invoice? {
+        return dal.isInvoicePending(id)
     }
-}

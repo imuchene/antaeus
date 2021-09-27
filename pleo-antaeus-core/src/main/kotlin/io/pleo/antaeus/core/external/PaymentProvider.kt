@@ -11,6 +11,8 @@ package io.pleo.antaeus.core.external
 import io.pleo.antaeus.models.Invoice
 import io.pleo.antaeus.core.services.CustomerService
 import io.pleo.antaeus.core.services.InvoiceService
+import io.pleo.antaeus.core.services.CurrencyService
+import io.pleo.antaeus.core.services.ChargeDetailsService
 
 interface PaymentProvider {
     /*
@@ -28,6 +30,8 @@ interface PaymentProvider {
 
     val customerService: CustomerService
     val invoiceService: InvoiceService
+    val currencyService: CurrencyService
+    val chargeDetailsService: ChargeDetailsService
 
     fun charge(invoice: Invoice): Boolean {
       
@@ -35,8 +39,29 @@ interface PaymentProvider {
       customerService.fetch(invoice.customerId)
 
       // Check if the invoice is pending, else throw an already paid exception
-      invoiceService.isInvoicePending(invoice.id)
+      val isPending = invoiceService.isInvoicePending(invoice.id)
 
+      if(isPending === null){
+        return false
+      }
+
+      // Validate the currency the invoice is in
+      val currency = currencyService.validateCurrency(invoice)
+
+      if(!currency){
+        return false
+      }
+
+      // Save charge details
+      val chargeDetails = chargeDetailsService.saveChargeDetails(invoice)
+      
+      if(chargeDetails === null){
+        return false
+      }
+
+      // Deduct the customer balance
+
+      // Make http request (to example.com), with payload
 
       return true
     }
