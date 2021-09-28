@@ -27,6 +27,9 @@ fun Project.kotlinProject() {
 
         // Joda Time
         "implementation"("joda-time:joda-time:2.10.11")
+
+        // Quartz Scheduler
+        "implementation"("org.quartz-scheduler:quartz:2.3.2")
     }
 }
 
