@@ -21,4 +21,8 @@ class InvoiceService(private val dal: AntaeusDal) {
     fun isInvoicePending(id: Int): Invoice? {
         return dal.isInvoicePending(id)
     }
+
+    fun updateInvoice(invoice: Invoice): Int? {
+        return dal.updateInvoice(invoice)
+    }
 }

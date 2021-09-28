@@ -14,6 +14,7 @@ import io.pleo.antaeus.models.ChargeDetails
 import io.pleo.antaeus.models.CustomerAccount
 import io.pleo.antaeus.models.InvoiceStatus
 import io.pleo.antaeus.models.Money
+import io.pleo.antaeus.data.InvoiceTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.statements.InsertStatement
@@ -127,6 +128,20 @@ class AntaeusDal(private val db: Database) {
                 it[this.customerBalance] =  customerAccount.customerBalance!!.toBigDecimal()
                 it[this.createdAt] =  customerAccount.createdAt
                 it[this.updatedAt] =  customerAccount.updatedAt
+            }
+        }
+        return id
+    }
+
+    fun updateInvoice(invoice: Invoice): Int? {
+        val id = transaction(db) {
+            InvoiceTable.update({InvoiceTable.id.eq(invoice.id)}) 
+            { 
+                it[this.id] =  invoice.id
+                it[this.customerId] =  invoice.customerId
+                it[this.currency] =  invoice.amount.currency.toString()
+                it[this.value] =  invoice.amount.value
+                it[this.status] =  invoice.status.toString()
             }
         }
         return id

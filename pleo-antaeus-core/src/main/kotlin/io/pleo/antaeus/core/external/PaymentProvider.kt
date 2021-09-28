@@ -10,6 +10,7 @@ package io.pleo.antaeus.core.external
 
 import io.pleo.antaeus.models.Invoice
 import io.pleo.antaeus.models.CustomerAccount
+import io.pleo.antaeus.models.InvoiceStatus
 import io.pleo.antaeus.core.services.CustomerService
 import io.pleo.antaeus.core.services.InvoiceService
 import io.pleo.antaeus.core.services.CurrencyService
@@ -48,7 +49,7 @@ interface PaymentProvider {
       // Validate the customer by checking if he/she exists
       customerService.fetch(invoice.customerId)
 
-      // Check if the invoice is pending, else throw an already paid exception
+      // Check if the invoice is pending, else stop further execution
       val isPending = invoiceService.isInvoicePending(invoice.id)
 
       if(isPending === null){
@@ -84,6 +85,13 @@ interface PaymentProvider {
       // else throw a network exception
 
       makeHttpRequestToTestProvider(invoice)
+
+      // Update invoice status to paid
+
+      val updatedInvoice = invoice.copy(status = InvoiceStatus.PAID)
+
+      invoiceService.updateInvoice(updatedInvoice)
+
 
       return true
     }
