@@ -118,7 +118,7 @@ interface PaymentProvider {
             
       }
       catch(e: NetworkException) {
-        // Send email to support that an error has occurred 
+        // TODO Send email to support that an error has occurred 
         throw NetworkException()
       }
      

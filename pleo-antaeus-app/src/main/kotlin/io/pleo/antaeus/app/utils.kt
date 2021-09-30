@@ -1,5 +1,10 @@
 
-// import io.pleo.antaeus.core.external.PaymentProvider
+import io.pleo.antaeus.core.external.PaymentProvider
+import io.pleo.antaeus.core.services.CustomerService
+import io.pleo.antaeus.core.services.InvoiceService
+import io.pleo.antaeus.core.services.CurrencyService
+import io.pleo.antaeus.core.services.ChargeDetailsService
+import io.pleo.antaeus.core.services.CustomerAccountService
 import io.pleo.antaeus.data.AntaeusDal
 import io.pleo.antaeus.models.Currency
 import io.pleo.antaeus.models.Invoice
@@ -31,10 +36,16 @@ internal fun setupInitialData(dal: AntaeusDal) {
 }
 
 // This is the mocked instance of the payment provider
-// internal fun getPaymentProvider(): PaymentProvider {
-//     return object : PaymentProvider {
-//         override fun charge(invoice: Invoice): Boolean {
-//                 return Random.nextBoolean()
-//         }
-//     }
-// }
+internal fun getPaymentProvider(dal: AntaeusDal): PaymentProvider {
+    return object : PaymentProvider {
+        override  val customerService: CustomerService = CustomerService(dal)
+        override val invoiceService: InvoiceService = InvoiceService(dal)
+        override val currencyService: CurrencyService = CurrencyService(dal)
+        override val chargeDetailsService: ChargeDetailsService = ChargeDetailsService(dal)
+        override val customerAccountService: CustomerAccountService = CustomerAccountService(dal)
+
+        override fun charge(invoice: Invoice): Boolean {
+                return Random.nextBoolean()
+        }
+    }
+}

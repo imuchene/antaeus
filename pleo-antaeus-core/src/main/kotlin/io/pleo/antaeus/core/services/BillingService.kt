@@ -4,6 +4,7 @@ import io.pleo.antaeus.core.external.PaymentProvider
 
 
 import org.quartz.Scheduler
+import org.quartz.Scheduler.*
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.JobBuilder.*;
@@ -25,20 +26,25 @@ class BillingService(
 
     fun invoicePaymentCronJob(){
 
-        val schedule: Scheduler? = null
-
-        val invoiceCronJob = InvoiceCronJob(invoiceService, paymentProvider)
+        val invoiceCronJob = InvoiceCronJob()
         
         val job: JobDetail = newJob(invoiceCronJob.javaClass)
         .withIdentity("invoicePayment")
         .build()
 
+        job.jobDataMap.put("invoiceService", invoiceService)
+        job.jobDataMap.put("paymentProvider", paymentProvider)
 
+        // Create a cron trigger that runs at midnight on the first
+        // of every month
         val trigger: CronTrigger = newTrigger()
         .withIdentity("runMonthly")
-        .withSchedule(cronSchedule("0 0 1 * *"))
+        .withSchedule(cronSchedule("0 0 12 1 1/1 ? *"))
         .build()
 
-        schedule?.scheduleJob(job, trigger)
+        val schedule: Scheduler = StdSchedulerFactory().getScheduler()
+        schedule.start();
+
+        schedule.scheduleJob(job, trigger)
     }
 }
