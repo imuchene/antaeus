@@ -13,7 +13,7 @@ import io.pleo.antaeus.models.Currency
 import io.pleo.antaeus.models.InvoiceStatus
 
 class CurrencyServiceTest {
-    val mockInvoice = Invoice(
+    private val mockInvoice = Invoice(
         id = 1, 
         customerId = 1, 
         amount = Money(
@@ -23,7 +23,7 @@ class CurrencyServiceTest {
         status = InvoiceStatus.PENDING
         )
 
-    val mockCustomer = Customer(id = 1, currency= Currency.USD)
+    private val mockCustomer = Customer(id = 1, currency= Currency.USD)
 
     private val dal = mockk<AntaeusDal> {
         every { fetchCustomer(mockCustomer.id) } returns mockCustomer

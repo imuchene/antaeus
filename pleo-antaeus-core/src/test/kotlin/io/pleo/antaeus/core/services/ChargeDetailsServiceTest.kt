@@ -13,7 +13,7 @@ import io.pleo.antaeus.core.services.ChargeDetailsService
 
 class ChargeDetailsServiceTest {
 
-    val mockInvoice = Invoice(
+    private val mockInvoice = Invoice(
         id = 1, 
         customerId = 1, 
         amount = Money(

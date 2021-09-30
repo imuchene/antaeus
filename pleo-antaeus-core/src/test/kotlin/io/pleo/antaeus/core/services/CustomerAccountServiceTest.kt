@@ -14,7 +14,7 @@ import io.pleo.antaeus.models.InvoiceStatus
 import org.joda.time.DateTime
 
 class CustomerAccountServiceTest {
-    val mockInvoice = Invoice(
+    private val mockInvoice = Invoice(
         id = 1, 
         customerId = 500, 
         amount = Money(
@@ -24,7 +24,7 @@ class CustomerAccountServiceTest {
         status = InvoiceStatus.PENDING
         )
 
-    val mockCustomerAccount = CustomerAccount(
+    private val mockCustomerAccount = CustomerAccount(
         customerId = 500,
         customerBalance = 1000000.toFloat(),
         createdAt = DateTime.now(),
