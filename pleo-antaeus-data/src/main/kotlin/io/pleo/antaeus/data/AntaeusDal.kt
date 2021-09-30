@@ -124,9 +124,7 @@ class AntaeusDal(private val db: Database) {
         val id = transaction(db) {
             CustomerAccountTable.update({CustomerAccountTable.customerId.eq(customerAccount.customerId)}) 
             { 
-                it[this.customerId] =  customerAccount.customerId
                 it[this.customerBalance] =  customerAccount.customerBalance!!.toBigDecimal()
-                it[this.createdAt] =  customerAccount.createdAt
                 it[this.updatedAt] =  customerAccount.updatedAt
             }
         }
@@ -136,9 +134,7 @@ class AntaeusDal(private val db: Database) {
     fun updateInvoice(invoice: Invoice): Int? {
         val id = transaction(db) {
             InvoiceTable.update({InvoiceTable.id.eq(invoice.id)}) 
-            { 
-                it[this.id] =  invoice.id
-                it[this.customerId] =  invoice.customerId
+            {
                 it[this.currency] =  invoice.amount.currency.toString()
                 it[this.value] =  invoice.amount.value
                 it[this.status] =  invoice.status.toString()

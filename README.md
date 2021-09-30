@@ -19,7 +19,7 @@ Please let us know how long the challenge takes you. We're not looking for how s
 Requirements:
 - \>= Java 11 environment
 
-Open the project using your favorite text editor. If you are using IntelliJ, you can open the `build.gradle.kts` file and it is gonna setup the project in the IDE for you.
+Open the project using your favorite text editor. If you are using IntelliJ, you can open the `build.gradle.kts` file and it is going to setup the project in the IDE for you.
 
 ### Building
 
