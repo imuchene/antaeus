@@ -60,7 +60,7 @@ fun main() {
 
     // Get third parties
     val paymentProvider = getPaymentProvider(dal)
-
+    
     // Create core services
     val invoiceService = InvoiceService(dal = dal)
     val customerService = CustomerService(dal = dal)

@@ -30,7 +30,5 @@ class InvoiceCronJob(): Job   {
     for (invoice in invoices) {
         paymentProvider.charge(invoice)
     }
-
-    
-}
+  }
 }

@@ -45,7 +45,8 @@ internal fun getPaymentProvider(dal: AntaeusDal): PaymentProvider {
         override val customerAccountService: CustomerAccountService = CustomerAccountService(dal)
 
         override fun charge(invoice: Invoice): Boolean {
-                return Random.nextBoolean()
+                return super.charge(invoice)
         }
+
     }
 }
