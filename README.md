@@ -1,12 +1,12 @@
-## Methodology Used and Rationale
+# Methodology Used and Rationale
 
-# Background
+## Background
 
 Since I am new to the Kotlin programming language and the Exposed framework used in the Antaeus project, I had to spend quite some time looking up a number of terms and perusing the documentation for both platforms. Thereafter, I also spent some time trying to understand the Antaeus code organization, and its core functionality.
 
 Once I had a basic familiarity with the project, I decided to use a [Design by Contract](https://en.wikipedia.org/wiki/Design_by_contract) approach, which means the core classes in the project where the main logic is supposed to reside, namely the PaymentProvider and the BillingService, have to perform certain steps in a particular order, in a similar fashion to a business contract. Here are the steps to be performed by the PaymentProvider:
 
-# @PaymentProvider
+## @PaymentProvider
 
 **Steps**:
 
@@ -29,7 +29,7 @@ Once I had a basic familiarity with the project, I decided to use a [Design by C
 
 Here are the steps to be carried out by the Billing service:
 
-# @BillingService
+## @BillingService
 
 **Steps**
 
@@ -41,7 +41,7 @@ Here are the steps to be carried out by the Billing service:
 The following classes/interfaces were created to support the above two:
 
 
-# Additional Services Created
+## Additional Services Created
 
 * `ChargeDetailsService` - assists in saving a charge detail
 
@@ -54,21 +54,21 @@ The following classes/interfaces were created to support the above two:
 
 The following new models were created to support the above services
 
-# Additional Models Created
+## Additional Models Created
 
 * `ChargeDetails`
 
 * `CustomerAccount`
     
     
-# Additional Libraries Added
+## Additional Libraries Added
 
 * [Joda Time](https://www.joda.org/joda-time/) - For date/time manipulation
 
 * [Quartz Scheduler](https://www.quartz-scheduler.org/) - For cronjob creation
 
 
-# Additional Unit Tests Created
+## Additional Unit Tests Created
 
 * `ChargeDetailsServiceTest`
 * `CurrencyServiceTest`
@@ -77,7 +77,7 @@ The following new models were created to support the above services
 **NB:** I also added a new spec to the `InvoiceServiceTest`
 
 
-# Time Taken
+## Time Taken
 
 **Planning and Design:** 2 working days
 
