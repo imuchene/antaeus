@@ -100,7 +100,7 @@ interface PaymentProvider {
       try {
         val client = HttpClient.newBuilder().build()
         val request = HttpRequest.newBuilder()
-          .uri(URI.create("http.example.com"))
+          .uri(URI.create("http://www.example.com"))
           .POST(HttpRequest.BodyPublishers.ofString(invoice.toString()))
           .build()
   
